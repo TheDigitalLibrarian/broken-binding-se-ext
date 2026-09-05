@@ -30,6 +30,29 @@ address controls on the Account tab, and only when you click them.
 - **Private mode.** One click redacts every name, address, order number, tracking
   number, date, and price, so you can share your screen safely.
 
+## Screenshots
+
+Every shot below has **private mode** switched on — that is why the names, order
+numbers, dates and amounts are grey bars, while covers, titles and authors stay
+readable. The orders shown are a test fixture, not a real account.
+
+### One continuous list
+
+Every page of the history merged into a single view, folded by year and month, with
+each order's books, shipping and tracking underneath it.
+
+![The order history as one merged list, grouped by year and month, showing book covers, titles, authors and shipping status, with order numbers, dates and prices redacted into grey bars by private mode.](docs/screenshots/list.png)
+
+### Every book, as a wall of covers
+
+The same filters, drawn as a grid instead of a list.
+
+![A grid of book covers grouped by year, each tile captioned with its title and month, with prices redacted into grey bars by private mode.](docs/screenshots/grid.png)
+
+### On a phone
+
+<img src="docs/screenshots/mobile.png" width="390" alt="The same view on a narrow screen: the tabs and header buttons stack onto separate rows, and the summary card reflows to a single column.">
+
 ## Install
 
 You need a userscript manager: [Tampermonkey](https://www.tampermonkey.net/),
