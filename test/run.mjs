@@ -148,6 +148,66 @@ try {
   const country = await page.evaluate(() => window.__deep("#a_country")[0]?.value);
   ok(country === "United Kingdom", "country defaults to the default address's country (no IP lookup)", "got " + country);
 
+  /* fix 14: the tab strip is two groups on one line. Below ~360px they no longer fit,
+     and with nothing to wrap them the log-out button was pushed off the right edge. */
+  await page.click('[data-tab="orders"]');
+  await sleep(300);
+  await page.setViewportSize({ width: 320, height: 700 });
+  await sleep(600);
+  const strip = await page.evaluate(() => {
+    const bar = window.__deep(".tabs")[0], out = window.__deep(".outBtn")[0];
+    const tl = window.__deep(".tl")[0], tr = window.__deep(".tr")[0];
+    const lab = window.__deep("#censor .lab")[0], cen = window.__deep("#censor")[0];
+    const sameLine = Math.abs(tl.getBoundingClientRect().top - tr.getBoundingClientRect().top) < 8;
+    return {
+      overflow: Math.round(bar.scrollWidth - bar.clientWidth),
+      pastEdge: Math.round(out.getBoundingClientRect().right - document.documentElement.clientWidth),
+      labelTallerThanPill: lab.getBoundingClientRect().height > cen.getBoundingClientRect().height + 1,
+      gap: sameLine ? Math.round(tr.getBoundingClientRect().left - tl.getBoundingClientRect().right) : null,
+    };
+  });
+  ok(strip.overflow <= 1 && strip.pastEdge <= 1,
+    "tab strip keeps Log out on screen at 320px", JSON.stringify(strip));
+  ok(!strip.labelTallerThanPill,
+    "private-mode label stays inside its pill at 320px", JSON.stringify(strip));
+  ok(strip.gap === null || strip.gap >= 8,
+    "tabs and header buttons are not flush against each other", JSON.stringify(strip));
+
+  /* fix 15: filtering to nothing left the list blank — the grid already says so */
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await sleep(400);
+  await page.fill("#q", "zzzznomatch");
+  await sleep(500);
+  const shownRows = await page.evaluate(() =>
+    [...document.querySelectorAll("tr.customerAccount__row")].filter((r) => r.style.display !== "none").length);
+  ok(shownRows === 0, "the no-match filter really hides every row", "got " + shownRows);
+  const emptyMsg = await page.evaluate(() => {
+    const visible = (el) => {
+      let n = el;
+      while (n && n.nodeType === 1) {
+        const cs = getComputedStyle(n);
+        if (cs.display === "none" || cs.visibility === "hidden" || cs.opacity === "0") return false;
+        n = n.parentElement || (n.getRootNode() && n.getRootNode().host) || null;
+      }
+      return true;
+    };
+    return window.__deep("*")
+      .filter((el) => !el.children.length && /no orders match|nothing to show/i.test(el.textContent || "") && visible(el))
+      .map((el) => el.textContent.replace(/\s+/g, " ").trim());
+  });
+  ok(emptyMsg.length > 0, "list view explains an empty result", JSON.stringify(emptyMsg));
+  await page.fill("#q", "");
+  await sleep(400);
+  const backRows = await page.evaluate(() =>
+    [...document.querySelectorAll("tr.customerAccount__row")].filter((r) => r.style.display !== "none").length);
+  ok(backRows === 4, "clearing the filter brings every row back", "got " + backRows);
+  const emptyGone = await page.evaluate(() => {
+    const el = window.__deep(".empty")[0];
+    return !el || getComputedStyle(el).display === "none" ||
+      (el.getRootNode().host && getComputedStyle(el.getRootNode().host).display === "none");
+  });
+  ok(emptyGone, "the empty-state note disappears once rows are back");
+
   ok(pageErrors.length === 0, "no uncaught page errors", pageErrors.join(" | "));
 } finally {
   await browser.close();

@@ -1009,9 +1009,13 @@
 
   var TABS_CSS = CENS_CSS +
     ":host{display:block;margin:0 0 20px}" +
-    ".tabs{display:flex;align-items:flex-end;justify-content:space-between;height:42px;" +
-    "border-bottom:1px solid rgba(217,184,114,.16)}" +
-    ".tl{display:flex;gap:28px}" +
+    /* two groups on one line, but they stop fitting around 400px. Without a wrap the
+       line just overflowed and pushed Log out off the right edge of the screen, so let
+       the buttons drop to their own row instead; align-content keeps the single-line
+       case sitting on the border exactly as a fixed height did. */
+    ".tabs{display:flex;align-items:flex-end;align-content:flex-end;flex-wrap:wrap;" +
+    "gap:6px 16px;min-height:42px;border-bottom:1px solid rgba(217,184,114,.16)}" +
+    ".tl{display:flex;gap:28px;flex:1 1 auto}" +
     ".tab{position:relative;background:none;border:0;padding:0 0 11px;cursor:pointer;" +
     "font:500 18px/22px system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:" + T3 + "}" +
     ".tab:hover{color:" + TNUM + "}" +
@@ -1019,7 +1023,9 @@
     ".tab.on:after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:" + GOLD + "}" +
     ".tab:focus-visible{outline:2px solid rgba(217,184,114,.6);outline-offset:3px;border-radius:4px}" +
     ".cnt{font-size:13px;color:" + T4 + ";margin-left:8px;" + MONO + "}" +
-    ".censBtn{display:inline-flex;align-items:center;height:26px;padding:0 12px;margin-bottom:8px;" +
+    /* the pill is a fixed 26px tall: let its label wrap and the text spills out of it */
+    ".censBtn{display:inline-flex;align-items:center;flex:none;white-space:nowrap;height:26px;" +
+    "padding:0 12px;margin-bottom:8px;" +
     "border-radius:13px;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.12);" +
     "font:600 11.5px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:" + T3 + "}" +
     ".censBtn .dot{width:6px;height:6px;border-radius:50%;background:#3f3a33;margin-right:8px}" +
@@ -1027,8 +1033,10 @@
     ".censBtn.on{background:" + GOLD + ";border-color:" + GOLD + ";color:#0e0e0e}" +
     ".censBtn.on .dot{background:#0e0e0e}" +
     ".censBtn:focus-visible{outline:2px solid rgba(217,184,114,.6);outline-offset:3px}" +
-    ".tr{display:flex;align-items:center;gap:6px}" +
-    ".outBtn{display:inline-flex;align-items:center;height:26px;padding:0 12px;margin-bottom:8px;" +
+    ".tr{display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;" +
+    "gap:6px;margin-left:auto}" +
+    ".outBtn{display:inline-flex;align-items:center;flex:none;white-space:nowrap;height:26px;" +
+    "padding:0 12px;margin-bottom:8px;" +
     "border-radius:13px;text-decoration:none;background:transparent;" +
     "border:1px solid rgba(255,255,255,.12);" +
     "font:600 11.5px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:" + T3 + "}" +
@@ -1768,6 +1776,29 @@
     refresh();
   });
 
+  /* ---------- empty state ---------- */
+  /* the grid says "Nothing to show." when a filter matches nothing; the list used to
+     just hide every row and leave a blank page under the summary card, with the only
+     clue tucked into the small status line inside the card */
+  var EMPTY_CSS =
+    ":host{display:none}" +
+    ".empty{padding:26px 0 10px;color:" + T4 + ";font-size:13px;line-height:1.5}" +
+    ".empty .h{display:block;margin-bottom:3px;font-size:15px;font-weight:600;color:" + T2 + "}";
+  /* "none" up front: shadow() writes an inline display, and the first refresh() is a
+     few statements away — without it the note flashes before any filter exists */
+  var emptyBox = shadow("div", EMPTY_CSS,
+    '<div class="empty"><span class="h">No orders match these filters.</span>' +
+    '<span class="why"></span></div>', "none");
+  theTable.parentNode.insertBefore(emptyBox.el, theTable.nextSibling);
+  var emptyWhy = emptyBox.root.querySelector(".why");
+  function paintEmpty(show, what) {
+    imp(emptyBox.el, { display: show ? "block" : "none" });
+    if (!show) return;
+    emptyWhy.textContent = what.length
+      ? "Active filters: " + what.join(" · ") + ". Clear them above to see every order."
+      : "Clear the filters above to see every order.";
+  }
+
   /* ---------- refresh ---------- */
   var refreshTimer = null;
   function scheduleRefresh() {
@@ -1849,6 +1880,12 @@
     $(".card").classList.toggle("filtered", filtered);
     paintLegend(byStatus);
     paintDetail();
+    /* the period and status names are already on screen in the controls, so naming
+       them again is safe — the typed query is masked in private mode, so describe it
+       rather than quoting it back */
+    var why = bits.slice();
+    if (q) why.push("a title, author or order-number search");
+    paintEmpty(view === "list" && shown === 0, why);
 
     var thisYear = new Date().getFullYear(), ty = 0, tn = 0;
     entries.forEach(function (e) {

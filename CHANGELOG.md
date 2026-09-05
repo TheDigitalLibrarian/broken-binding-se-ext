@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+Visual QA pass against a headless browser at 320–1440px.
+
+- The tab strip no longer overflows on narrow screens. Below about 400px the
+  Orders/Account tabs and the Private mode / Log out buttons could not fit on one
+  line, and with nothing to wrap them Log out was pushed off the right edge of the
+  screen; the buttons now drop to their own row, and the two groups keep a gap
+  instead of butting together. The pill labels no longer wrap out of their pills.
+- The list view says when a filter matches nothing. Filtering everything out left
+  a blank page under the summary card — the grid already said "Nothing to show."
+  The list now names the active filters, and describes rather than repeats the
+  typed search so private mode does not read it back out.
+
 ## 1.3.0
 
 Renamed for distribution. The extension is now **Broken Binding Specials &
