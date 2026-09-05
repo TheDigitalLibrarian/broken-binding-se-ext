@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.3.1
 
 Visual QA pass against a headless browser at 320–1440px.
 

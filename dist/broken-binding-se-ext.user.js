@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Broken Binding Specials & Subscriptions Extension
 // @namespace    https://thebrokenbindingsub.com/
-// @version      1.3.0
+// @version      1.3.1
 // @description  Enhances The Broken Binding. Today it rebuilds your account page — every page of order history merged into one continuous list with totals, covers, authors, shipping and tracking, per-order-date currency conversion, a grid of every book, address management, and a private mode for screen-sharing. A better store-browsing view is planned.
 // @author       João Morais
 // @license      MIT

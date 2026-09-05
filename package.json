@@ -1,6 +1,6 @@
 {
   "name": "broken-binding-se-ext",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Browser enhancement for The Broken Binding. Currently rebuilds the account/order-history page — one merged list with totals, covers, currency conversion, a book grid, address management, and a private mode; an improved store-browsing view is planned.",
   "author": "João Morais",
   "license": "MIT",
