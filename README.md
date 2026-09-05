@@ -32,22 +32,30 @@ address controls on the Account tab, and only when you click them.
 
 ## Screenshots
 
-Every shot below has **private mode** switched on — that is why the names, order
-numbers, dates and amounts are grey bars, while covers, titles and authors stay
-readable. The orders shown are a test fixture, not a real account.
+Everything below runs against a test fixture — the orders, totals and cover art are
+invented, not anyone's account.
 
 ### One continuous list
 
 Every page of the history merged into a single view, folded by year and month, with
-each order's books, shipping and tracking underneath it.
+each order's books, shipping and tracking underneath it, and the totals recomputed as
+you filter.
 
-![The order history as one merged list, grouped by year and month, showing book covers, titles, authors and shipping status, with order numbers, dates and prices redacted into grey bars by private mode.](docs/screenshots/list.png)
+![The order history as one merged list, grouped by year and month. A summary card shows total spent, order count, book count and average per order. Each order expands to its books with covers, authors, prices, shipping status and tracking links.](docs/screenshots/list.png)
 
 ### Every book, as a wall of covers
 
-The same filters, drawn as a grid instead of a list.
+The same filters and totals, drawn as a grid instead of a list.
 
-![A grid of book covers grouped by year, each tile captioned with its title and month, with prices redacted into grey bars by private mode.](docs/screenshots/grid.png)
+![A grid of book covers grouped by year, each tile captioned with its title, month and price.](docs/screenshots/grid.png)
+
+### Private mode
+
+One click replaces every name, address, order number, tracking number, date and amount
+with a solid bar, so the page is safe to put on a shared screen. Covers, titles and
+authors stay — they are the part worth showing.
+
+![The same list with private mode on: order numbers, dates and every amount are replaced by grey bars, while book covers, titles and authors remain readable.](docs/screenshots/private-mode.png)
 
 ### On a phone
 
