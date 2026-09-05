@@ -1,0 +1,163 @@
+<title>Broken Binding Specials & Subscriptions Extension</title>
+<style>
+:root{--bg:#12100e;--card:#1a1714;--line:#332e24;--gold:#d9b872;--txt:#e9e4d9;--dim:#9d968a;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
+.page{max-width:760px;margin:0 auto;padding:48px 22px 80px}
+h1{font-size:30px;line-height:1.2;margin:0 0 8px;letter-spacing:-.01em}
+.sub{color:var(--dim);margin:0 0 34px}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin:38px 0 12px;font-weight:600}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:22px}
+.drag{display:inline-block;background:var(--gold);color:#1a1408;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:6px;font-size:16px;cursor:grab}
+.drag:active{cursor:grabbing}
+ol{padding-left:20px;margin:0}
+ol li{margin:9px 0}
+code{background:#231f1a;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:14px}
+textarea{width:100%;height:110px;background:#0e0c0a;color:#b9b2a4;border:1px solid var(--line);border-radius:6px;padding:11px;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}
+button{margin-top:10px;background:transparent;border:1px solid #6b5a33;color:var(--gold);font:600 12px/1 system-ui;letter-spacing:.08em;text-transform:uppercase;padding:10px 14px;border-radius:4px;cursor:pointer}
+button:hover{background:#2a2318}
+ul{padding-left:20px;margin:0}
+ul li{margin:7px 0}
+.dim{color:var(--dim)}
+details{margin-top:14px}
+summary{cursor:pointer;color:var(--gold);font-size:14px}
+pre{overflow-x:auto;background:#0e0c0a;border:1px solid var(--line);border-radius:6px;padding:14px;font:12px/1.5 ui-monospace,Menlo,monospace;color:#b9b2a4}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+</style>
+
+<div class="page">
+<h1>Broken Binding Specials & Subscriptions Extension</h1>
+<p class="sub">A userscript (Firefox or Chrome) or bookmarklet (Chrome) for <span class="dim">thebrokenbindingsub.com/account</span>. One click pulls every page of your order history into one continuous list, puts a spend summary on top, and rebuilds each order as a single compact card: cover, title, author, printing, whether it has shipped, the carrier and a tracking link when there is one, and what the shipping &amp; tax came to. No pagination, no opening orders one by one. Your account details and saved addresses move into a second tab, and a private-mode toggle redacts every personal figure so you can show the page to someone.</p>
+
+<h2>Install — userscript (Firefox or Chrome)</h2>
+<div class="card">
+<p style="margin:0 0 14px">The userscript runs <b>by itself</b> whenever you open your account page — nothing to click — and it works the same in Firefox and Chrome. This is the better route on Firefox, where a bookmarklet this large is awkward.</p>
+<ol>
+<li>Install a userscript manager: <b>Violentmonkey</b> or <b>Tampermonkey</b> (both Firefox and Chrome), or <b>Greasemonkey</b> (Firefox only).</li>
+<li>Open its dashboard and choose <b>Create a new script</b>.</li>
+<li>Select everything in the editor, delete it, then paste the script below in its place.</li>
+<li>Save (<code>Ctrl/Cmd + S</code>), then open <code>thebrokenbindingsub.com/account</code>.</li>
+</ol>
+<p style="margin:18px 0 8px" class="dim">The userscript — this is the whole thing, header and all:</p>
+<textarea id="userjs" readonly spellcheck="false" style="height:150px">@@USERJS@@</textarea>
+<button id="copyuser">Copy userscript</button>
+<p class="dim" style="margin:14px 0 0;font-size:14px">If you saved it as a <code>.user.js</code> file instead, dragging that file onto the manager&rsquo;s dashboard installs it too. There is no auto-update — to take a newer version, paste over the old one.</p>
+</div>
+
+<h2>Install — bookmarklet (Chrome)</h2>
+<div class="card">
+<p style="margin:0 0 16px"><b>If your bookmarks bar is visible</b> (<code>Ctrl/Cmd + Shift + B</code>), just drag this button onto it:</p>
+<p style="margin:0 0 6px"><a class="drag" href="@@URL_ATTR@@">📚 Broken Binding Specials & Subscriptions Extension</a></p>
+<p class="dim" style="margin:14px 0 0;font-size:14px">Dragging only works from this page opened in a real browser tab — if you are looking at a preview panel, download the file first and open it, or use the manual method below.</p>
+</div>
+
+<h2>Or add it by hand</h2>
+<div class="card">
+<ol>
+<li>In Chrome open <code>Bookmarks → Bookmark manager</code> (<code>Ctrl/Cmd + Shift + O</code>).</li>
+<li>Click the <b>⋮</b> menu (top right) → <b>Add new bookmark</b>.</li>
+<li>Name: <code>Broken Binding Specials & Subscriptions Extension</code>. URL: paste the code below.</li>
+<li>Save.</li>
+</ol>
+<p style="margin:18px 0 8px" class="dim">The bookmark URL:</p>
+<textarea id="code" readonly spellcheck="false">@@URL_ATTR@@</textarea>
+<button id="copy">Copy code</button>
+</div>
+
+<h2>Use it</h2>
+<div class="card">
+<ol>
+<li>Go to <code>thebrokenbindingsub.com/account</code> and make sure you are logged in.</li>
+<li>Click the <b>Broken Binding Specials & Subscriptions Extension</b> bookmark. Every page of your history merges into one list, newest first, and each order&rsquo;s contents open in place.</li>
+</ol>
+<p style="margin:16px 0 8px" class="dim"><b>Two tabs</b></p>
+<ul>
+<li><b>Orders</b> (the default) holds the whole history. <b>Account</b> holds what the shop used to spread down the top of the page &mdash; your default shipping address and your subscription &mdash; folded into one short card, so the order list starts at the top of the screen instead of a screenful down.</li>
+<li><b>Log out</b> sits beside the private-mode toggle in the top right, so it is one click away from either tab.</li>
+<li>Under that card, <b>every other address you have saved</b> is laid out as its own small card, read from the addresses page the first time you open the tab &mdash; so you can see which address is which without clicking through to them one at a time.</li>
+<li><b>Remove</b> on a card deletes that address, and it asks first: the link becomes &ldquo;Remove this address?&rdquo; with <b>Remove</b> and <b>Keep</b>, so one stray click cannot delete anything. <b>Add address</b> opens a short form built from the shop&rsquo;s own country list, with your own country already chosen rather than the United States the shop defaults to. Both go straight to the shop, and the list and your default-address card refresh themselves afterwards.</li>
+<li>A standing note under the addresses says the part that is easiest to get wrong: <b>changing an address here does not touch orders you have already placed</b>. Each order ships to the address captured when it was made, so an order already in progress needs an email to the shop.</li>
+<li>The tab you are on is written to the address bar, so <code>/account#account</code> opens straight onto your details next time.</li>
+</ul>
+<p style="margin:16px 0 8px" class="dim"><b>Private mode</b></p>
+<ul>
+<li>The <b>Private mode</b> toggle in the top right replaces every name, address, order number, tracking number, date and amount with a solid bar &mdash; the summary figures, the section totals, the card headers, the grid captions and every address on the Account tab. Covers, titles, authors, printings and shipping statuses stay readable, so the page still shows what it does. A banner across the top says the mode is on.</li>
+<li>Bars are solid, never blurred: a blur still leaks how long a number is and can be undone from a screenshot. While it is on, the copy and email buttons are switched off and the order links lose their address, so nothing hidden can be lifted off the page by mouse, keyboard or a hover over the status bar. The filter box masks what you type.</li>
+<li>It is a display mode only &mdash; nothing is deleted, and toggling it off brings everything straight back.</li>
+</ul>
+<p style="margin:16px 0 8px" class="dim"><b>The summary bar</b></p>
+<ul>
+<li><b>Total spent</b> leads the card, with the <b>currency</b> and <b>rate</b> dropdowns on its own baseline — they change this number, so they sit beside it rather than across the card. Orders, <b>books</b>, average per order and the date of your first order follow as smaller supporting figures. The book count fills itself in — every order loads in the background, and the caption counts down while it works.</li>
+<li><b>Year and month dropdowns</b> narrow everything — list, grid and the figures above — to that period. The heading then reads &ldquo;Total spent · 2025&rdquo; and the caption keeps the all-time figure beside it, so a narrowed number is never mistaken for the whole. The month dropdown appears once a year is in play and lists only the months that actually hold orders.</li>
+<li>Where there is nothing to choose between, neither dropdown pretends otherwise: a single year, or a year with orders in only one month, shows as a plain badge instead of a one-item menu.</li>
+<li>The controls sit in one labelled row: <b>View</b> (List / Grid) switches between the order list and a cover-thumbnail view of every book you have ordered, <b>Detail</b> sets how much is folded away, and the period, sort and filter controls follow after a divider.</li>
+<li><b>Sort</b> — <b>newest first</b> (the default) or <b>oldest first</b>. It reorders the list and the grid together, and the year and month headings follow, so oldest-first reads 2024 upward with January before December. Your choice is remembered.</li>
+<li><b>Currency</b> — the dropdown converts every figure on the page (summary, section headers, card totals, book prices, grid captions) into any of thirty currencies: EUR, USD, CAD, AUD, NZD, CHF, SEK, NOK, DKK, PLN, CZK, JPY, BRL, INR, SGD, ZAR, MXN, AED, SAR, QAR, TWD, VND, CLP, COP, ARS, EGP, PKR, NGN, KES and UAH. They are grouped by what each one supports, so you can see before picking which convert at an order&rsquo;s own date and which only at today&rsquo;s rate.</li>
+<li><b>Which rate</b> — the second dropdown chooses between <b>at the order&rsquo;s date</b> (the default) and <b>at today&rsquo;s rate</b>. At the order&rsquo;s date, each order is converted using the European Central Bank reference rate published for the day you placed it, so an order from 2024 is valued at what it was worth in 2024; totals add up each order at its own rate rather than converting the grand total. It makes a real difference — across this history the two answers sit a couple of percent apart. The daily fixings come from <code>api.frankfurter.dev</code> in a single request; today&rsquo;s rates come from <code>open.er-api.com</code>. Both are free and need no key. Weekends and holidays have no fixing, so they take the previous working day.</li>
+<li>The two sources do not cover the same currencies — the ECB fixes about 30, open.er-api quotes about 165 — so <b>the rate dropdown only appears when the chosen currency really offers both</b>. Pick one the ECB does not fix and the dropdown disappears, everything converts at today's rate, and the line underneath says why. Your own preference is remembered through that: it is not overwritten by a currency that could only do it one way, so going back to a fully supported currency restores your choice. The same happens if a rate source is unreachable.</li>
+<li><b>Status colours</b> — each order strip carries a coloured edge and a matching tint: green shipped, amber not shipped yet, rose partially refunded, red refunded or cancelled, teal partly shipped, blue payment pending, violet on hold. Only the statuses your account actually contains appear in the legend under the toolbar, each with a live count (&ldquo;Shipped 123&rdquo;) that follows the year, month and text filters. <b>Click a status to show only those orders</b> — pick several to combine them, and a <b>Clear</b> chip appears to drop the filter again.</li>
+<li><b>Filter</b> — type a book title, author or order number.</li>
+</ul>
+<p style="margin:16px 0 8px" class="dim"><b>In the list</b></p>
+<ul>
+<li><b>Year and month headers</b> show the orders and spend in that period; click one to fold it away. A year header carries <b>Fold months</b>, which folds or unfolds every month inside that year; a month header carries <b>Fold orders</b>, which folds or unfolds the cards in that month and leaves every other month alone. Each button flips to <b>Unfold</b> once it has been used, and the toolbar has <b>Fold years</b> / <b>Unfold all</b> for the whole history.</li>
+<li>The strip carries the whole cost story, labelled: <b>Books £25.00 + shipping &amp; tax £16.82</b> next to the <b>£41.82</b> you actually paid.</li>
+<li>A green ✓ line means shipped, with the date, carrier and a <b>Track</b> link when a tracking number exists. An amber ○ line means not shipped yet.</li>
+<li>The copy icon beside the order number copies it; the one beside <b>Track</b> copies the tracking number. Both flash a green tick.</li>
+<li>The envelope icon opens a new email to <code>info@thebrokenbinding.co.uk</code>, pre-filled with the order number, date, total, books and fulfilment status — you just add your question and send.</li>
+<li>The arrow on the right (or clicking the order strip) folds a single order.</li>
+<li>Click any book title to open its product page.</li>
+</ul>
+<p style="margin:16px 0 8px" class="dim"><b>In the grid</b></p>
+<ul>
+<li>Every book you have ordered, newest first, as covers shown whole rather than cropped to a shape they are not — the shop serves square artwork, and a set of six books is worth seeing in full — <b>grouped under the same year and month headings as the list</b> — each heading counting the books beneath it and what they cost. An amber dot marks one that has not shipped yet. Clicking a cover opens its product page.</li>
+<li>Headings fold on click, and a year carries the same <b>Fold months</b> button as in the list. The year, month, status and text filters all narrow the grid exactly as they narrow the list.</li>
+<li><b>Detail</b> works differently here, because a grid has no order cards to open: it chooses how finely the covers are grouped — <b>Years</b> for one heading per year, <b>Months</b> for a heading per month. <b>Orders</b> and <b>Books</b> have nothing to act on in the grid, so they are hidden while it is showing.</li>
+</ul>
+</div>
+
+<h2>Good to know</h2>
+<div class="card">
+<ul>
+<li>It runs entirely in your browser and only reads pages you can already see, using your existing login. Nothing is sent anywhere.</li>
+<li>Everything except the address controls is read-only: it reads pages you can already see and changes nothing. The two exceptions are on the Account tab &mdash; <b>Remove</b> deletes a saved address and <b>Add address</b> saves a new one &mdash; and both act only when you click them. The email button opens a draft in your mail app; nothing is sent for you.</li>
+<li>The layout is restyled on top of the shop&rsquo;s own page: a one-book order takes about 130px instead of 300px, so the whole history is roughly half the scroll it was.</li>
+<li>Converted prices are mid-market rates, not what your bank charged. Even at the order&rsquo;s date your card added its own spread and any foreign-transaction fee on top, and neither the shop nor this script can see that — so treat a converted figure as close, not exact.</li>
+<li>After the pages merge, all your orders load quietly in the background (a few at a time) so the book count, the grid and the filter are complete without you scrolling. What is on screen is fetched first.</li>
+<li>Tracking numbers show up only when the shop attached one to the shipment. Most Royal Mail shipments there have none, so the line reads &ldquo;no tracking&rdquo; — that is the shop&rsquo;s data, not a parsing miss. When a number is present it links straight to Royal Mail&rsquo;s tracking page.</li>
+<li>Fulfilment is read per item, so a part-shipped order shows which line went out and which did not.</li>
+<li>The changes disappear on refresh; click the bookmark again.</li>
+<li>If an order fails to load, its row says so — fold and unfold it to retry.</li>
+<li>If The Broken Binding rebuilds its account page, the script may stop finding orders and will tell you so.</li>
+</ul>
+<details>
+<summary>View the readable source</summary>
+<pre>@@SRC@@</pre>
+</details>
+<p class="dim" style="margin:14px 0 0;font-size:14px">The bookmarklet and the userscript run exactly the same code; the userscript is this source with a header on top.</p>
+</div>
+
+</div>
+<script>
+function wireCopy(btnId, taId, label) {
+  document.getElementById(btnId).addEventListener('click', function () {
+    var t = document.getElementById(taId);
+    t.select(); t.setSelectionRange(0, t.value.length);
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) {}
+    if (!ok && navigator.clipboard) { navigator.clipboard.writeText(t.value).then(function(){}); }
+    this.textContent = 'Copied';
+    var b = this; setTimeout(function () { b.textContent = label; }, 1800);
+  });
+}
+wireCopy('copyuser', 'userjs', 'Copy userscript');
+document.getElementById('copy').addEventListener('click', function () {
+  var t = document.getElementById('code');
+  t.select(); t.setSelectionRange(0, t.value.length);
+  var ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  if (!ok && navigator.clipboard) { navigator.clipboard.writeText(t.value).then(function(){}); }
+  this.textContent = 'Copied';
+  var b = this; setTimeout(function () { b.textContent = 'Copy code'; }, 1800);
+});
+</script>

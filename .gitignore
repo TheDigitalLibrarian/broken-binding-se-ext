@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# logs / OS cruft
+*.log
+.DS_Store
+
+# desktop app scratch (saved copies of delivered files)
+outputs/
+
+# test scratch
+test/run.min.mjs
+
+# build artifacts — regenerate with `npm run build`.
+# The built userscript IS tracked: its raw URL is what Greasy Fork syncs from.
+dist/*
+!dist/broken-binding-se-ext.user.js
