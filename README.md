@@ -45,9 +45,17 @@ To update by hand, open the link again and accept the reinstall.
 
 ### Bookmarklet
 
-There is also a bookmarklet build, for running it on demand rather than on every
-visit. It isn't published as a file — only the userscript ships here — so you'd need
-to build it from source: see [CONTRIBUTING.md](CONTRIBUTING.md).
+No manager needed. It runs when you click it, rather than on every visit.
+
+1. Open **[bookmarklet.txt](https://raw.githubusercontent.com/TheDigitalLibrarian/broken-binding-se-ext/main/dist/bookmarklet.txt)**
+   and copy the whole line.
+2. Make a new bookmark and paste it as the URL (address/location).
+3. On your account page, click the bookmark.
+
+It is one very long line — the whole extension, minified and URL-encoded — so select
+all of it. Paste it into the bookmark manager's URL field rather than the address bar,
+which truncates. Being a copy, it does not update itself; to take a newer version,
+paste over the old one.
 
 ## Privacy & safety
 

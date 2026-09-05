@@ -12,8 +12,8 @@ templates/install.tpl.html     The install page shell (build fills it in).
 build/build_user.py            Prepends the userscript header -> dist/broken-binding-se-ext.user.js
 build/build.py                 Builds dist/bookmarklet.txt and dist/install.html
 build/package.ps1              Zips the userscript -> dist/broken-binding-se-ext-<version>.zip
-dist/                          Built artifacts. Only the .user.js is committed — its raw
-                               URL is the install link, and what Greasy Fork syncs from.
+dist/                          Built artifacts. The .user.js and bookmarklet.txt are
+                               committed — they are the two install links in README.md.
 test/server.mjs                A fixture server mirroring the account page's DOM.
 test/run.mjs                   A headless-Chromium suite that drives the plugin.
 ```
@@ -32,10 +32,19 @@ npm run build        # -> dist/broken-binding-se-ext.min.js, .user.js, bookmarkl
 npm run check        # confirm src/broken-binding-se-ext.js is valid ES5
 ```
 
-`npm run build` also produces `dist/install.html` — a guided install page with copy
-buttons for both the userscript and the bookmarklet — and `dist/bookmarklet.txt`,
-whose single line is the bookmarklet URL. Neither is committed, so build them locally
-if you want them.
+`npm run build` also produces `dist/install.html`, a guided install page with copy
+buttons for both routes. It is not committed — `raw.githubusercontent.com` serves
+everything as `text/plain`, so it would not render from the repo. Build it locally, or
+put it on GitHub Pages if you want it linkable.
+
+Two notes if you build on Windows:
+
+- `npm run build:user` calls `python3`, which Windows resolves to the Microsoft Store
+  alias rather than an interpreter. Run `python build/build_user.py` directly, or make
+  `python3` resolve.
+- `build/build.py` reads and writes UTF-8 explicitly. Keep it that way — the source
+  carries `£`, `·` and curly quotes, and a bare `open()` picks up cp1252 from the
+  locale and dies on them.
 
 ## Testing
 
@@ -81,8 +90,10 @@ the layout Greasemonkey, Tampermonkey and Violentmonkey expect.
 .\build\package.ps1 -Build   # rebuild the userscript from src first, then zip
 ```
 
-Commit the rebuilt `dist/broken-binding-se-ext.user.js`: it is the install link, so a
-release that does not update it ships nothing.
+Commit the rebuilt `dist/broken-binding-se-ext.user.js` **and** `dist/bookmarklet.txt`:
+they are the two install links, so a release that does not update them ships nothing.
+The bookmarklet is derived from the minified build, so it only moves if `build:min`
+ran — use `npm run build`, not `build_user.py` alone.
 
 ## Publishing
 

@@ -5,21 +5,28 @@ Reads  : src/broken-binding-se-ext.js, dist/broken-binding-se-ext.min.js (run bu
          dist/broken-binding-se-ext.user.js, templates/install.tpl.html
 Writes : dist/bookmarklet.txt, dist/install.html
 """
-import os, urllib.parse, html
+import io, os, urllib.parse, html
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 p = lambda *a: os.path.join(ROOT, *a)
+# every file here is UTF-8 (the source carries £, ·, curly quotes). Bare open() takes
+# its encoding from the locale, which on Windows is cp1252 and cannot decode any of
+# them — say utf-8 explicitly rather than depending on where the build runs.
+rd = lambda *a: io.open(p(*a), encoding="utf-8").read()
+wr = lambda path, s: io.open(p(*path), "w", encoding="utf-8", newline="").write(s)
 
-mini = open(p("dist", "broken-binding-se-ext.min.js")).read().strip()
+mini = rd("dist", "broken-binding-se-ext.min.js").strip()
 url = "javascript:" + urllib.parse.quote(mini + "void 0;", safe="")
-open(p("dist", "bookmarklet.txt"), "w").write(url)
+# no trailing newline: the whole file is the bookmark's URL, and a stray \n or \r
+# rides along into the address field when it is pasted
+wr(("dist", "bookmarklet.txt"), url)
 
-src = open(p("src", "broken-binding-se-ext.js")).read()
-userjs = open(p("dist", "broken-binding-se-ext.user.js")).read()
-tpl = open(p("templates", "install.tpl.html")).read()
+src = rd("src", "broken-binding-se-ext.js")
+userjs = rd("dist", "broken-binding-se-ext.user.js")
+tpl = rd("templates", "install.tpl.html")
 page = (tpl.replace("@@URL_ATTR@@", html.escape(url, quote=True))
            .replace("@@SRC@@", html.escape(src))
            .replace("@@USERJS@@", html.escape(userjs)))
-open(p("dist", "install.html"), "w").write(page)
+wr(("dist", "install.html"), page)
 print("bookmarklet bytes", len(url))
 print("install.html bytes", len(page))

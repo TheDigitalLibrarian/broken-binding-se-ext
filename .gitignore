@@ -12,6 +12,10 @@ outputs/
 test/run.min.mjs
 
 # build artifacts — regenerate with `npm run build`.
-# The built userscript IS tracked: its raw URL is what Greasy Fork syncs from.
+# Two of them are tracked because they ARE the distribution: the userscript's raw URL
+# is the install link (and what Greasy Fork syncs from), and the bookmarklet is a line
+# you copy. The .min.js is an intermediate, and install.html would not render from
+# raw.githubusercontent.com anyway — it serves everything as text/plain.
 dist/*
 !dist/broken-binding-se-ext.user.js
+!dist/bookmarklet.txt
